@@ -8,9 +8,9 @@
 
 .logo {
     color: #fff; /* Header logo text color */
-    padding: 20px 20px 19px 20px; /* Ensures logo to be vertically in the center */
+    padding: 20px 20px 19px 20px; /* this makes sure that the logo is vertically in the center */
     font-weight: bold;
-    font-size: 18px; /* Header logo text font size */
+    font-size: 18px; /* font size of logo text */
     cursor: pointer;
 }
 
