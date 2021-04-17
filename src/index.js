@@ -1,7 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Controller from '../src/common/Controller';
+//import 'typeface-roboto';
+import ImageViewer from "./ImageViewer";
+import {BrowserRouter as Router} from "react-router-dom";
 
-ReactDOM.render(<Controller/>, document.getElementById('root'));
-
+ReactDOM.render(
+    <Router>
+        <ImageViewer/>
+    </Router>,
+    document.getElementById('root')
+);

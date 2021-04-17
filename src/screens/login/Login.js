@@ -16,11 +16,12 @@ import Header from "../../common/header/Header";
 
 //import styles for login page
 import './Login.css'
+import {Redirect} from 'react-router-dom';
 
 const userDetails = {
     username: 'snehal',
     password: 'patel',
-    accessToken: 'IGQVJXeldXejl5bFVnRVJSRHN1b21JQ2RvLUZA0ZAXlzbUVySXRLNWlrX04zS1gwbnU1Uy13WGVET3FvRlFzSUZAoSFlYS0JSVTZAYVEtiOFVJTFJVV1k4OXRQcXlIQUR3c0JwWFk1Vk5BWEt5QnVkR0I0M1RmVFZA2Ujk3cTFv'
+    accessToken: 'IGQVJVXy1KRGM5NHZAjMW5FRmVrRjBuUV9FSlNodmJJRXh4emJCLTBfdVBwb2lZAaS1LNlNvX0ZAWQ19DMHpjR2xGZAnhLQi10bUFJenVDTHRGNmV5X2JBUmpRWFpSNW1OWG51bkVHVTBzaXF1UTU1RWJmU0pwQ3ZArYjRiT0sw'
 };
 
 /**
@@ -42,8 +43,7 @@ class Login extends Component {
 
     render() {
         if (this.state.loginSuccess === true) {
-            //return <Redirect to={{pathname: '/home', state: {loginSuccess: true}}}/>
-            this.props.history.push('/home/');
+            return <Redirect to={{pathname: '/home', state: {loginSuccess: true}}}/>
         }
         return <div>
             <div><Header/></div>

@@ -13,7 +13,8 @@ class Header extends Component {
         this.state = {
             loggedOut: false,
             menuState: false,
-            anchorEl: null            
+            anchorEl: null,
+            profile_picture: './assets/18252675_797419017075297_7707936252875505664_a.jpg'            
         }
     }
 
@@ -43,8 +44,7 @@ class Header extends Component {
                                     null
                             }
                             <IconButton id='profile-icon' onClick={this.onProfileIconClick}>
-                                <Avatar variant="circle" alt="profile_picture"
-                                        src={this.props.profilePictureUrl}/>
+                                <Avatar alt="Snehal Patel" src="http://manage.utsavcare.com/profile.png" />
                             </IconButton>
                             <div>
                                 <Menu open={this.state.menuState} onClose={this.onMenuClose}
