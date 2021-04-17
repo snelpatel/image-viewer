@@ -1,0 +1,19 @@
+.header-flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background: #263238; /* Header background color */
+    height: 60px;
+}
+
+.logo {
+    color: #fff; /* Header logo text color */
+    padding: 20px 20px 19px 20px; /* Ensures logo to be vertically in the center */
+    font-weight: bold;
+    font-size: 18px; /* Header logo text font size */
+    cursor: pointer;
+}
+
+.header-right-flex-container{
+    display: flex;
+}
