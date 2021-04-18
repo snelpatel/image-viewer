@@ -171,6 +171,7 @@ class Home extends Component {
     fetchMediaURL = (mid) => {
         var url = "https://graph.instagram.com/"+mid+"?fields=id,media_type,media_url,username,timestamp&access_token=" + sessionStorage.getItem("access-token");
         var xhr = new XMLHttpRequest();
+        let that = this;
         xhr.open("GET", url);
 
         xhr.onreadystatechange = function () {
@@ -180,7 +181,8 @@ class Home extends Component {
             var data = JSON.parse(xhr.responseText);
             console.log(data["media_url"]);
             //return data["media_url"];
-            this.setState({'individual_media': data["media_url"]})
+            that.setState({'individual_media': data["media_url"]});
+            
         }};
 
         xhr.send();
