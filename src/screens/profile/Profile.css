@@ -29,7 +29,7 @@
     background-color: white;
     border: 1px solid rgba(0,0,0,.2);
     border-radius: .3rem;
-
+    
 }
 
 .selected-image-modal {
@@ -37,12 +37,13 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 15px;
+    padding: 60px;
     background-color: white;
     border: 1px solid rgba(0,0,0,.2);
     border-radius: .3rem;
     box-shadow: black;
     inline-size: fit-content;
+    width: fit-content;
 }
 
 .add-button-grid {

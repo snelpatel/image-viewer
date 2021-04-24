@@ -45,13 +45,14 @@ class Profile extends Component {
             openImageDetailModal: false,
             closeImageDetailModal: true,
             imageSelectedForDetails: null,
-            indexImageSelectedForDetails: null,
+            indexImageSelectedForDetails: 0,
             follows: 5,
             followedBy: 3,
             totalPost: 9,
             liked: [],
             comments: [],
-            individual_media: ''
+            individual_media: '',
+            tags: ["LiveLife", "FreeLife", "Tech"]
         }
     }
 
@@ -88,7 +89,7 @@ class Profile extends Component {
                         </Grid>
                         <Grid item xs={5} id='user_name'>
                             <Typography variant="h4" component="h1" style={{marginBottom: 5}}>
-                                {this.state.username}
+                                <br/>{this.state.username}
                             </Typography>
                             <Grid container spacing={3} justify="center">
                                 <Grid item xs={4}>
@@ -167,9 +168,9 @@ class Profile extends Component {
                             <Grid container spacing={2} direction="row" justify="center" alignItems='flex-start'>
                                 <Grid item xs={6}>
                                     {this.state.imageSelectedForDetails ? (
-                                        <img alt={this.state.imageSelectedForDetails.images.id}
-                                             src={this.state.imageSelectedForDetails.images.standard_resolution.url}
-                                             style={{height: "100%",width: "100%"}}/>
+                                        <img alt={this.state.imageSelectedForDetails.id}
+                                             src={this.state.logedinuserpost[5]}
+                                             style={{height: "75%",width: "75%"}}/>
                                     ) : null}
                                 </Grid>
                                 <Grid item xs={6}>
@@ -180,22 +181,21 @@ class Profile extends Component {
                                                           direction="row" style={{marginBottom:5}}>
                                                         <Grid item xs={2}>
                                                             <Avatar id='modal-profile-pic'
-                                                                    alt={this.state.imageSelectedForDetails.user.full_name}
-                                                                    src={this.state.imageSelectedForDetails.user.profile_picture}
+                                                                    variant="circular" src="http://manage.utsavcare.com/profile.png" className='avatar'
                                                             />
                                                         </Grid>{" "}
                                                         <Grid item xs={10}>
                                                             <Typography style={{paddingTop: 20, paddingLeft: 10}}>
-                                                                {this.state.imageSelectedForDetails.user.username}
+                                                                {this.state.username}
                                                             </Typography>
                                                         </Grid>
                                                     </Grid>
                                                     <Divider className='divider' variant="fullWidth"/>
                                                     <Typography style={{marginTop:5}}>
-                                                        {this.state.imageSelectedForDetails.caption.text.split("\n")[0]}
+                                                        {this.state.imageSelectedForDetails.caption.split("\n")[0]}
                                                     </Typography>
                                                     <Typography>
-                                                        {this.state.imageSelectedForDetails.tags.map((tag, index) => (
+                                                        {this.state.tags.map((tag, index) => (
                                                             <span style={{color: "blue"}}
                                                                   key={index}>{'#' + tag + ' '}</span>
                                                         ))}
@@ -207,7 +207,7 @@ class Profile extends Component {
                                                         this.state.comments[this.state.indexImageSelectedForDetails].map(comment => {
                                                             return (
                                                                 <p style={{fontSize: 16}} key={comment}>
-                                                                    <b>{this.state.imageSelectedForDetails.user.username}:</b> {comment}
+                                                                    <b>{this.state.username}:</b> {comment}
                                                                 </p>
                                                             );
                                                         })}
@@ -221,7 +221,7 @@ class Profile extends Component {
                                                                 :
                                                                 <FavoriteBorderIcon/>}
                                                         </IconButton>
-                                                        <span>{this.state.liked[this.state.indexImageSelectedForDetails] ? this.state.imageSelectedForDetails.likes.count + 1 : this.state.imageSelectedForDetails.likes.count} likes</span>
+                                                        <span>2 likes</span>
                                                     </CardActions>
                                                     <Grid className="comment-add-section" container spacing={3}
                                                           alignItems='flex-end'>
