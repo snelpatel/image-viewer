@@ -21,14 +21,13 @@ import {Redirect} from 'react-router-dom';
 const userDetails = {
     username: 'snehal',
     password: 'patel',
-    accessToken: 'IGQVJXVnNBRHFIZAFl0VlR0NGNzWDdFNmdDYUtKOVBCc1VNR1ZApYTYzTjZAnRUY2R3R4QnQ3WWZAhd1duVGZAUY0s4aDM4VFp1QWtfR0NpeGtiTGo1Q01sUUozbkFZAaE1yQWNnQ2NwZAlo4eUpRT2ZAWVzVDSwZDZD'
+    accessToken: 'IGQVJYRU9NSW9Fam9PcVJtTDVLU05fcTdEcEd1TnN5bmF5TkFvcFFlU2hTZATZA5YnpoQTAwOWFHd1RSamhxSkQ2OWxuMHJla1dtdmFXSFVWUHhMSG0wX2RBaEJGc3pueFZAXZAmVfSUt3'
 };
 
 /**
  * Login Page
  */
 class Login extends Component {
-
     constructor() {
         super();
         this.state = {

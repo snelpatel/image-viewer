@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Header from "../../common/header/Header";
-import './Home.css'
+import './Home.css';
 import {Redirect} from 'react-router-dom';
 import {
     Avatar,
@@ -17,8 +17,8 @@ import {
 } from '@material-ui/core'
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-
 import {red} from '@material-ui/core/colors';
+
 class Home extends Component {
 
     constructor() {
@@ -27,19 +27,39 @@ class Home extends Component {
             profile_picture: 'http://manage.utsavcare.com/profile.png',
             recent_media: null,
             filtered_media: null,
+            posts: {},
             individual_media: '',
+            marr: [],
             likes: [],
             comments: [],
-            searchText: ''
+            searchText: '',
+            username: 'sbpateloffice',
+            loggedinuserpost: {}
         }
     }
 
     componentDidMount() {
         if (this.props.location.state !== undefined) {
-           // this.fetchOwnerInfo();
             this.fetchMostRecentMedia();
+        /*
+            let data = null;
+            let xhr = new XMLHttpRequest();
+            let that = this;
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState === 4) {
+                    that.setState({ loggedinuserpost: JSON.parse(this.responseText), timestamp: that.state.loggedinuserpost.timestamp })
+                }
+            })
+
+            let accesstoken = sessionStorage.getItem("access-token");
+            console.log(that.state.filtered_media);
+            xhr.open("GET", "https://graph.instagram.com/" + that.state.filtered_media.id + "?fields=id,media_type,media_url,username,timestamp&access_token=" + accesstoken);
+            xhr.send(data);*/
+                        
         }
     }
+
+    
 
     render() {
         if (this.props.location.state === undefined) {
@@ -57,20 +77,21 @@ class Home extends Component {
                                 <Grid item xs={6} key={details.id}>
                                     <Card key={details.id + '_card'}>
                                         <CardHeader
-                                            avatar={<Avatar variant="circle" src="http://manage.utsavcare.com/profile.png" className='avatar'/>}
-                                            title={details.id}
-                                            subheader={new Date(details.timestamp).toLocaleString()}/>
-                                            <div style={{display: "none"}}>{this.fetchMediaURL(details.id)}</div>
-                                        <CardMedia style={{height: 0, paddingTop: '56.25%', marginBottom: 5}}
-                                                   image={this.state.individual_media}/>
-                                                   
+                                            avatar={<Avatar variant="circular" src="http://manage.utsavcare.com/profile.png" className='avatar'/>}
+                                            title={details.caption}
+                                            subheader={details.id}/>
+                                                                                    
+                                        <CardMedia
+                                        component="img"
+                                        src={this.state.loggedinuserpost.media_url}           
+                                        />
                                         <Divider variant="middle" className='divider'/>
                                         <CardContent>
                                             <div
-                                                className='post-caption'>{details.username}</div>
+                                                className='post-caption'>{details.caption}</div>
 
                                             <div className='post-tags'>
-                                                snelpatel
+                                                Fun Life
                                             </div>
                                             <br/>
                                             <div className='likes'>
@@ -94,7 +115,7 @@ class Home extends Component {
                                                     this.state.comments[index] ?
                                                         (this.state.comments)[index].map((comment, index) => (
                                                             <p key={index}>
-                                                                <b>{details.user.username}</b> : {comment}
+                                                                <b>{this.state.username}</b> : {comment}
                                                             </p>
                                                         ))
                                                         :
@@ -135,12 +156,102 @@ class Home extends Component {
                     recent_media: JSON.parse(this.responseText).data,
                     filtered_media: JSON.parse(this.responseText).data
                 });
+                //console.log(that.state.filtered_media);
+                let data3 = that.state.filtered_media;
+                console.log(data3);
+                let newData = [];
+                var count =0;/*
+                data3.forEach((index) => {
+                    //console.log(index.id);
+                    newData[count]=this.getPhotoURL(index.id);
+                    count++;    
+                })
+                console.log(newData);*/
             }
         });
 
         let url = "https://graph.instagram.com/me/media?fields=id,caption&access_token=" + sessionStorage.getItem("access-token");
         xhr.open("GET", url);
         xhr.send(data);
+    }
+
+    getPhotoURL=(mid)=> {
+        let data = null;
+            let xhr = new XMLHttpRequest();
+            let that = this;
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState === 4) {
+                    //that.setState({ loggedinuserpost: JSON.parse(this.responseText), timestamp: that.state.loggedinuserpost.timestamp })
+                    return(JSON.parse(this.responseText));
+                }
+            });
+
+            let accesstoken = sessionStorage.getItem("access-token");
+            xhr.open("GET", "https://graph.instagram.com/" + mid + "?fields=id,media_type,media_url,username,timestamp&access_token=" + accesstoken);
+            xhr.send(data);
+    }
+
+    /*photoURL() {
+        const data = this.state.filtered_media;
+        //console.log(data[0]["id"]);
+        var mid='';
+        let that = this;
+        let data1='';
+        let medUrl='';
+        for (var id in data) {
+            if (data.hasOwnProperty(id)) {
+                mid = data[id]["id"];
+                //console.log(mid);
+                var url = "https://graph.instagram.com/"+mid+"?fields=id,media_type,media_url,username,timestamp&access_token=" + sessionStorage.getItem("access-token");
+                var xhr = new XMLHttpRequest();
+                console.log(url);
+                xhr.open("GET", url);
+                xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    data1 = JSON.parse(xhr.responseText);
+                    
+                    //console.log(medUrl);    
+                }};
+                xhr.send();
+                //console.log(this.data1);
+                medUrl = data1["media_url"];
+                data[id]["media_urln"] = medUrl;
+                //console.log(id);
+              //data.data[id]["media_urln"]="http://manage.utsavcare.com/profile.png";
+                //data.data[id]["media_urln"]=that.photoURL(mid["id"]);;
+            }
+        }
+        //console.log(data);
+        that.setState({
+            recent_media: data,
+            filtered_media: data
+        });
+        
+        //return that.medUrl;
+    }*/   
+
+    
+
+    fetchMediaURL = (mid) => {
+        //var url = "https://graph.instagram.com/"+mid+"?fields=id,media_type,media_url,username,timestamp&access_token=" + sessionStorage.getItem("access-token");
+        var url="https://dog.ceo/api/breeds/image/random";
+        var xhr = new XMLHttpRequest();
+        let that = this;
+        xhr.open("GET", url);
+
+        xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            //console.log(xhr.status);
+            //console.log(xhr.responseText);
+            //var data = JSON.parse(xhr.responseText);
+            //console.log(data["media_url"]);
+            //return data["media_url"];
+            that.setState({posts: JSON.parse(xhr.responseText)});
+            
+        }};
+
+        xhr.send();
+
     }
 
     onFavIconClick = (index) => {
@@ -168,26 +279,7 @@ class Home extends Component {
         this.setState({'comments': currentComment})
     }
 
-    fetchMediaURL = (mid) => {
-        var url = "https://graph.instagram.com/"+mid+"?fields=id,media_type,media_url,username,timestamp&access_token=" + sessionStorage.getItem("access-token");
-        var xhr = new XMLHttpRequest();
-        let that = this;
-        xhr.open("GET", url);
-
-        xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-            //console.log(xhr.status);
-            //console.log(xhr.responseText);
-            var data = JSON.parse(xhr.responseText);
-            console.log(data["media_url"]);
-            //return data["media_url"];
-            that.setState({'individual_media': data["media_url"]});
-            
-        }};
-
-        xhr.send();
-
-    }
+    
 
     onSearch = (e) => {
         this.setState({'searchText': e.target.value})
