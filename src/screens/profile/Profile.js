@@ -41,6 +41,7 @@ class Profile extends Component {
             fullNameRequired: false,
             openFullNameEditModal: false,
             closeFullNameEditModal: true,
+            logedinuserpost: null,
             openImageDetailModal: false,
             closeImageDetailModal: true,
             imageSelectedForDetails: null,
@@ -57,7 +58,8 @@ class Profile extends Component {
     componentDidMount() {
         if (this.props.location.state !== undefined) {
             //this.fetchOwnerInfo();
-            //this.fetchMostRecentMedia();
+            this.fetchMostRecentMedia();
+            this.allMediaURL();
         }
     }
 
@@ -153,7 +155,7 @@ class Profile extends Component {
                                 
                                 <Card variant="outlined">
                                     <CardMedia style={{height: 0, paddingTop: '56.25%'}}
-                                               image={details.media_url}
+                                               image={this.state.logedinuserpost[index]}
                                                title={details.id}/>
                                 </Card>
                             </Grid>
@@ -263,6 +265,25 @@ class Profile extends Component {
         });
 
         let url = "https://graph.instagram.com/me/media?fields=id,caption&access_token=" + sessionStorage.getItem("access-token");
+        xhr.open("GET", url);
+        xhr.send(data);
+    }
+
+    allMediaURL() {
+        let data = null;
+        let xhr = new XMLHttpRequest();
+        let that = this;
+
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                that.setState({
+                    logedinuserpost: JSON.parse(this.responseText).data                   
+                });
+                //console.log(that.state.logedinuserpost[0]);
+                
+            }
+        });
+        let url = "http://manage.utsavcare.com/wXayydsbasdf05Addss3778.json";
         xhr.open("GET", url);
         xhr.send(data);
     }
