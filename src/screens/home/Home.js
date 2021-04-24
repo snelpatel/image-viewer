@@ -66,7 +66,7 @@ class Home extends Component {
                                         <CardHeader
                                             avatar={<Avatar variant="circular" src="http://manage.utsavcare.com/profile.png" className='avatar'/>}
                                             title={details.caption}
-                                            subheader={details.id}/>
+                                            subheader={"24/04/2021 09:45:"+1+index}/>
                                                                                     
                                         <CardMedia
                                         component="img"
@@ -78,7 +78,7 @@ class Home extends Component {
                                                 className='post-caption'>{details.caption}</div>
 
                                             <div className='post-tags'>
-                                                Fun Life
+                                                #FunInLife #LiveFree #Tech
                                             </div>
                                             <br/>
                                             <div className='likes'>
