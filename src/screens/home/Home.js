@@ -25,6 +25,7 @@ class Home extends Component {
         super();
         this.state = {
             profile_picture: 'http://manage.utsavcare.com/profile.png',
+            logedinuserpost: null,
             recent_media: null,
             filtered_media: null,
             posts: {},
@@ -41,21 +42,7 @@ class Home extends Component {
     componentDidMount() {
         if (this.props.location.state !== undefined) {
             this.fetchMostRecentMedia();
-        /*
-            let data = null;
-            let xhr = new XMLHttpRequest();
-            let that = this;
-            xhr.addEventListener("readystatechange", function () {
-                if (this.readyState === 4) {
-                    that.setState({ loggedinuserpost: JSON.parse(this.responseText), timestamp: that.state.loggedinuserpost.timestamp })
-                }
-            })
-
-            let accesstoken = sessionStorage.getItem("access-token");
-            console.log(that.state.filtered_media);
-            xhr.open("GET", "https://graph.instagram.com/" + that.state.filtered_media.id + "?fields=id,media_type,media_url,username,timestamp&access_token=" + accesstoken);
-            xhr.send(data);*/
-                        
+            this.allMediaURL();              
         }
     }
 
@@ -83,7 +70,7 @@ class Home extends Component {
                                                                                     
                                         <CardMedia
                                         component="img"
-                                        src={this.state.loggedinuserpost.media_url}           
+                                        src={this.state.logedinuserpost[index]}           
                                         />
                                         <Divider variant="middle" className='divider'/>
                                         <CardContent>
@@ -154,23 +141,13 @@ class Home extends Component {
             if (this.readyState === 4) {
                 that.setState({
                     recent_media: JSON.parse(this.responseText).data,
-                    filtered_media: JSON.parse(this.responseText).data
-                });
-                //console.log(that.state.filtered_media);
-                let data3 = that.state.filtered_media;
-                console.log(data3);
-                let newData = [];
-                var count =0;/*
-                data3.forEach((index) => {
-                    //console.log(index.id);
-                    newData[count]=this.getPhotoURL(index.id);
-                    count++;    
-                })
-                console.log(newData);*/
+                    filtered_media: JSON.parse(this.responseText).data,
+                });      
             }
         });
 
         let url = "https://graph.instagram.com/me/media?fields=id,caption&access_token=" + sessionStorage.getItem("access-token");
+        //let url = "http://manage.utsavcare.com/wXayydsbasdf05Addss3778.json";
         xhr.open("GET", url);
         xhr.send(data);
     }
@@ -178,7 +155,7 @@ class Home extends Component {
     getPhotoURL=(mid)=> {
         let data = null;
             let xhr = new XMLHttpRequest();
-            let that = this;
+            //let that = this;
             xhr.addEventListener("readystatechange", function () {
                 if (this.readyState === 4) {
                     //that.setState({ loggedinuserpost: JSON.parse(this.responseText), timestamp: that.state.loggedinuserpost.timestamp })
@@ -191,44 +168,24 @@ class Home extends Component {
             xhr.send(data);
     }
 
-    /*photoURL() {
-        const data = this.state.filtered_media;
-        //console.log(data[0]["id"]);
-        var mid='';
+    allMediaURL() {
+        let data = null;
+        let xhr = new XMLHttpRequest();
         let that = this;
-        let data1='';
-        let medUrl='';
-        for (var id in data) {
-            if (data.hasOwnProperty(id)) {
-                mid = data[id]["id"];
-                //console.log(mid);
-                var url = "https://graph.instagram.com/"+mid+"?fields=id,media_type,media_url,username,timestamp&access_token=" + sessionStorage.getItem("access-token");
-                var xhr = new XMLHttpRequest();
-                console.log(url);
-                xhr.open("GET", url);
-                xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    data1 = JSON.parse(xhr.responseText);
-                    
-                    //console.log(medUrl);    
-                }};
-                xhr.send();
-                //console.log(this.data1);
-                medUrl = data1["media_url"];
-                data[id]["media_urln"] = medUrl;
-                //console.log(id);
-              //data.data[id]["media_urln"]="http://manage.utsavcare.com/profile.png";
-                //data.data[id]["media_urln"]=that.photoURL(mid["id"]);;
+
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                that.setState({
+                    logedinuserpost: JSON.parse(this.responseText).data                   
+                });
+                //console.log(that.state.logedinuserpost[0]);
+                
             }
-        }
-        //console.log(data);
-        that.setState({
-            recent_media: data,
-            filtered_media: data
         });
-        
-        //return that.medUrl;
-    }*/   
+        let url = "http://manage.utsavcare.com/wXayydsbasdf05Addss3778.json";
+        xhr.open("GET", url);
+        xhr.send(data);
+    }
 
     
 
